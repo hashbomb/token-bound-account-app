@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const tokenId = context.params?.tokenId as string;
 
   const sdk = new ThirdwebSDK(activeChain, {
-    clientId: TWApiKey,
+    secretKey: process.env.TW_SECRET_KEY,
   });
 
   const contract = await sdk.getContract(nftDropAddress);
@@ -122,7 +122,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const sdk = new ThirdwebSDK(activeChain, {
-    clientId: TWApiKey,
+    secretKey: process.env.TW_SECRET_KEY,
   });
 
   const contract = await sdk.getContract(nftDropAddress);
