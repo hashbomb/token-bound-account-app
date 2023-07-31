@@ -5,7 +5,7 @@ import {
   Web3Button,
 } from "@thirdweb-dev/react";
 import React from "react";
-import { activeChain, tokenAddress } from "../../const/constants";
+import { activeChain, tokenAddress, TWApiKey } from "../../const/constants";
 import { Signer } from "ethers";
 import style from "../../styles/Token.module.css";
 import toast from "react-hot-toast";
@@ -17,7 +17,11 @@ interface ConnectedProps {
 // ThirdwebSDKProvider is a wrapper component that provides the smart wallet signer and active chain to the Thirdweb SDK.
 const SmartWalletConnected: React.FC<ConnectedProps> = ({ signer }) => {
   return (
-    <ThirdwebSDKProvider signer={signer} activeChain={activeChain}>
+    <ThirdwebSDKProvider
+      signer={signer}
+      activeChain={activeChain}
+      clientId={TWApiKey}
+    >
       <ClaimTokens />
     </ThirdwebSDKProvider>
   );
@@ -42,7 +46,7 @@ const ClaimTokens = () => {
               contractAddress={tokenAddress}
               action={async (contract) => await contract.erc20.claim(10)}
               onSuccess={() => {
-                toast(`NFT Claimed!`, {
+                toast(`Tokens Claimed!`, {
                   icon: "✅",
                   style: toastStyle,
                   position: "bottom-center",
@@ -50,7 +54,7 @@ const ClaimTokens = () => {
               }}
               onError={(e) => {
                 console.log(e);
-                toast(`NFT Claim Failed! Reason: ${(e as any).reason}`, {
+                toast(`Tokens Claim Failed! Reason: ${(e as any).reason}`, {
                   icon: "❌",
                   style: toastStyle,
                   position: "bottom-center",
